@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31410.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "SwateInstallChecker", "SwateInstallChecker.fsproj", "{B48C468F-2584-4DA1-B7FE-9D7B50EA7EBA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B48C468F-2584-4DA1-B7FE-9D7B50EA7EBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B48C468F-2584-4DA1-B7FE-9D7B50EA7EBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B48C468F-2584-4DA1-B7FE-9D7B50EA7EBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B48C468F-2584-4DA1-B7FE-9D7B50EA7EBA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6039FA23-3384-46E8-9268-685B4D1CAF39}
+	EndGlobalSection
+EndGlobal
