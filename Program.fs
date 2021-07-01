@@ -1,4 +1,6 @@
-﻿let checkParseResult (res : Checks.ParseResult) =
+﻿open Checks
+
+let checkParseResult (res : Checks.ParseResult<'a>) =
     if res.Success = false 
     then
         printfn "\nSwateCheck was unsuccessful. Press any key to close the app."
@@ -35,5 +37,3 @@ let main argv =
     System.Console.ReadKey() |> ignore
 
     0 // return an integer exit code
-
-System.Diagnostics.Process.Start(@"C:\Users\Mauso\OneDrive\CSB-Stuff\NFDI\ArcCommander\arc.exe",["i";"create"])
