@@ -6,13 +6,22 @@ If you have any problems using this, please let us know [here](/issues).
 
 ## How to use it
 
-1. Download the newest version of the [Swate Installer here](/Swate.zip).
-2. Unzip the archive into any folder.
-3. Click on **install.cmd**. This will download necessary files and register Swate for your Excel application.
-4. Open/Restart Excel ➔ Insert ➔ Click on the small Arrow on the right side of My Add-ins ➔ Swate (Under Developer Add-ins).
-5. You will be able to access Swate like this with all Excel instances.
-6. Deleting the config folder from the Swate folder will crash Swate. In that case you can simply click **install.cmd** again.
+1. Download the newest version of the Swate Installer for your respective OS:
+   - [Windows (64-bit)](/Installer/Win/install.exe)
+   - [Linux (64-bit)](/Installer/Linux/install)
+   - [MacOS (64-bit)](/Installer/MacOS/install)
+2. Run the **install** application (in case of Windows: **install.exe**). This will download necessary files and register Swate for your Microsoft Excel application.
+3. Open/Restart Excel ➔ Insert ➔ Click on the small arrow on the right side of My Add-ins ➔ Swate (Under Developer Add-ins).  
+![install](/.assets/SwateInstall.jpg)
+4. You will be able to access Swate like this with all Excel instances.
+6. Deleting the config folder from the Swate folder will crash Swate. In that case you can simply run the **install** file again.
+
+## Uninstall
+
+If you want to cleanely remove Swate from MS Excel, use the provided Uninstaller for your respective OS:
+- <a href="/src/Install/uninstall.cmd" download >Windows</a>
+- <a href="/src/Install/uninstall.sh" download >Linux/MacOS</a>
 
 ## Overview
 
-![overview](/.assets/SwateInstall.png)
+![overview](/.assets/Overview.jpg)
