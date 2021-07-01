@@ -3,11 +3,27 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
+    <PublishSingleFile>true</PublishSingleFile>
+    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <PackAsTool>true</PackAsTool>
     <WarnOn>3390;$(WarnOn)</WarnOn>
+    <ToolCommandName>SwateCheck</ToolCommandName>
+    <CreateDesktopShortcut>false</CreateDesktopShortcut>
+    <!--<PublishProfileFullPath>./publish/</PublishProfileFullPath>-->
+    <!--<RuntimeIdentifier>win10-x64</RuntimeIdentifier>
+    <RuntimeIdentifier>linux-x64</RuntimeIdentifier>-->
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Console.fs" />
+    <Compile Include="Checks.fs" />
     <Compile Include="Program.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="FSharp.Data" Version="4.1.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <!--<PackageReference Include="System.IO.Compression.FileSystem"  />-->
   </ItemGroup>
 
 </Project>
