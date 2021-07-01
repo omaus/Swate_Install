@@ -17,7 +17,7 @@
 
   <ItemGroup>
     <Compile Include="Console.fs" />
-    <Compile Include="Checks.fs" />
+    <Compile Include="Install.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>
