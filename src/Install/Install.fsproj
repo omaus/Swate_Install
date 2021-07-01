@@ -13,6 +13,7 @@
     <!--<PublishProfileFullPath>./publish/</PublishProfileFullPath>-->
     <!--<RuntimeIdentifier>win10-x64</RuntimeIdentifier>
     <RuntimeIdentifier>linux-x64</RuntimeIdentifier>-->
+    <PublishTrimmed>true</PublishTrimmed>
   </PropertyGroup>
 
   <ItemGroup>
