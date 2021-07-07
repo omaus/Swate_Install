@@ -2,7 +2,7 @@
 
 As long as [Swate](https://github.com/nfdi4plants/Swate) will not be available from the Microsoft Store, this installer can be used. It aims to provide an easier solution then previous alternatives.
 
-If you have any problems using this, please let us know [here](/issues).
+If you have any problems using this, please let us know [here](https://github.com/omaus/Swate_Install/issues/new).
 
 ## How to use it
 
