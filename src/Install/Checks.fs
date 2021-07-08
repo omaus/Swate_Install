@@ -32,7 +32,7 @@ let getAppVersion () =
 let checkSemVer appVer =
     let pattern = @"""(?<major>0|[1-9]\d*)\.(?<minor>0|[1-9]\d*)\.(?<patch>0|[1-9]\d*)(?:-(?<prerelease>(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+(?<buildmetadata>[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?"""
     match System.Text.RegularExpressions.Regex.Match(appVer, pattern) with
-    | x when x.Success -> Console.ok <| sprintf "AppVer %s is a SemVer" appVer
+    | x when x.Success -> (*Console.ok <| sprintf "AppVer %s is a SemVer" appVer*) () // user doesn't need to read this...
     | _ -> Console.error <| sprintf "ERROR: AppVer %s is not a SemVer" appVer
 
 type Ontology = {

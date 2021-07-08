@@ -135,24 +135,27 @@ let downloadMain() =
         let files = System.IO.Directory.GetFiles (Paths.configPath())
         files |> Array.iter System.IO.File.Delete
 
-    Console.info <| "Download and unzip required utilities."
+    Console.info "Download and unzip required utilities."
 
     let downloadSideLoader = Download.downloadSideLoader()
-    Console.info <| "Download Sideloader done!"
+    Console.info "Download Sideloader done!"
     /// Unzip downloaded sideloader zip file
     let unzip = Unzip.unzipFile (Paths.sideloaderZipPath()) (Paths.configPath())
     /// Delete downloaded sideloader zip file
     let cleanUp = System.IO.File.Delete (Paths.sideloaderZipPath())
 
     let downloadManifestXml = Download.downloadManifestXml()
-    Console.info <| "Download Manifest.xml done!"
+    Console.info "Download Manifest.xml done!"
 
-    Console.ok <| "Finished downloading utilities."
+    let downloaderUninstaller = Download.downloadUninstaller()
+    Console.info "Download Uninstaller done!"
+
+    Console.ok "Finished downloading utilities."
 
 
 let installMain() =
     
-    Console.info <| "Check Sideloader status."
+    Console.info "Check Sideloader status."
 
     // commented due to TestInstall not running atm.
     //match SideloaderCommands.testSideloadInstall() with
