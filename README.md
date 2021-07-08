@@ -18,7 +18,8 @@ If you have any problems using this, please let us know [here](/issues).
 
 ## Uninstall
 
-If you want to cleanly remove Swate from MS Excel, use the provided Uninstaller for your respective OS:  
+If you want to cleanly remove Swate from MS Excel, use the provided Uninstaller for your respective OS.  
+Swate Installer already downloads the fitting file for you into the folder where the executable _Install_ file is. If you missed or accidentally deleted the file you can download it here:  
 1. Right click on the links and choose "Save link as..."/"Save target as..."
     - [Windows](https://raw.githubusercontent.com/omaus/Swate_Install/master/uninstall.cmd)
     - [Linux/MacOS](https://raw.githubusercontent.com/omaus/Swate_Install/master/uninstall.sh)
