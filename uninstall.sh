@@ -1,5 +1,5 @@
 echo Deleting Swate
-./config/Set-WebAddin.exe -cleanup -manifestPath "./config/manifest.xml"
+./config/Set-WebAddin.exe -uninstall -installedManifestFullname "./config/sideloaderData/manifest.xml"
 
 echo Deleting manifest.xml, deleting WebAddin-sideloader, deleting config folder
 rm -r ./config/

@@ -120,8 +120,17 @@ module SideloaderCommands =
     let installSwateTest() =
         System.Diagnostics.Process.Start(Paths.sideloaderPath(), ["-test"; "-manifestPath"; Paths.manifestPath()])
 
-    let removeSwate() =
+    let installSwateFull() =
+        let installPath() = Path.Combine(Paths.configPath(), "sideloaderData")
+        System.IO.Directory.CreateDirectory(installPath()) |> ignore
+        System.Diagnostics.Process.Start(Paths.sideloaderPath(), ["-install"; "-manifestPath"; Paths.manifestPath(); "-installPath"; installPath()])
+
+    let removeSwateTest() =
         System.Diagnostics.Process.Start(Paths.sideloaderPath(), ["-cleanup"; "-manifestPath"; Paths.manifestPath()])
+
+    let removeSwateFull() =
+        // manifestPaths könnte failen, weil nicht das Gleiche weil manifestPath ≠ installedManifestFullname (gilt auch für die Uninstaller!)
+        System.Diagnostics.Process.Start(Paths.sideloaderPath(), ["-uninstall"; "-installedManifestFullname"; Paths.manifestPath()])
 
 open Console
 
@@ -162,6 +171,8 @@ let installMain() =
     //| true -> Console.ok <| "Sideloader ready to use."
     //| false -> Console.error <| "Sideloader failed to start."
 
-    let installSwate = SideloaderCommands.installSwateTest()
+    let installSwate = 
+        //SideloaderCommands.installSwateTest()
+        SideloaderCommands.installSwateFull()
 
     Console.ok "Swate registry done."
