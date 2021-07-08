@@ -4,11 +4,19 @@ open System.IO
 
 module Paths = 
 
-    let pRoot () = Directory.GetCurrentDirectory()
-    let configPath () = Path.Combine(pRoot (),"config")
-    let sideloaderZipPath () = Path.Combine(configPath (),"Set-WebAddin.zip")
-    let sideloaderPath () = Path.Combine(configPath (),"Set-WebAddin.exe")
-    let manifestPath() = Path.Combine(configPath(),"manifest.xml")
+    let pRoot() = Directory.GetCurrentDirectory()
+    let configPath() = Path.Combine(pRoot (), "config")
+    let sideloaderZipPath() = Path.Combine(configPath (), "Set-WebAddin.zip")
+    let sideloaderPath() = Path.Combine(configPath (), "Set-WebAddin.exe")
+    let manifestPath() = Path.Combine(configPath(), "manifest.xml")
+    
+    let getUninstallerPath os = 
+        let filename = 
+            match os with
+            | "Windows"         -> "Uninstall.cmd"
+            | "Linux" | "MacOS" -> "Uninstall.sh"
+            | _                 -> printfn "No suitable Uninstaller existing. OS (%s) not supported" os; ""
+        Path.Combine(pRoot(), filename)
 
     let createConfigFolder () = Directory.CreateDirectory (configPath())
 
@@ -20,6 +28,20 @@ module Download =
     [<Literal>]
     let ManifestUrl = @"https://raw.githubusercontent.com/nfdi4plants/Swate/developer/.assets/assets/manifest.xml"
 
+    let getOS () = 
+        match System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform with
+        | _ when System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows)  -> "Windows"
+        | _ when System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Linux)    -> "Linux"
+        | _ when System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.OSX)      -> "MacOS"
+        | _ when System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.FreeBSD)  -> "FreeBSD (whatever this is)"
+        | _                                                                                                                         -> "no supported OS"
+
+    let getUninstallerUrl os =
+        match os with
+        | "Windows"         -> @"https://raw.githubusercontent.com/omaus/Swate_Install/master/uninstall.cmd"
+        | "Linux" | "MacOS" -> @"https://raw.githubusercontent.com/omaus/Swate_Install/master/uninstall.sh"
+        | _                 -> printfn "Cannot download Uninstaller. OS (%s) not supported" os; ""
+
     let webCl = new System.Net.WebClient()
 
     open Paths
@@ -27,6 +49,9 @@ module Download =
     let downloadSideLoader() = webCl.DownloadFile(SideloaderUrl,sideloaderZipPath())
 
     let downloadManifestXml() = webCl.DownloadFile(ManifestUrl,manifestPath())
+
+    // testen: Fehlendes Literal attribute könnte problematisch werden
+    let downloadUninstaller() = webCl.DownloadFile(getUninstallerUrl (getOS()),getUninstallerPath (getOS()))
 
 
 module Unzip =
@@ -92,7 +117,7 @@ module SideloaderCommands =
     //    let c = TestInstall.runProc (Paths.sideloaderPath()) "-help" None
     //    Seq.contains errorMsg c |> not
 
-    let installSwate() =
+    let installSwateTest() =
         System.Diagnostics.Process.Start(Paths.sideloaderPath(), ["-test"; "-manifestPath"; Paths.manifestPath()])
 
     let removeSwate() =
@@ -134,6 +159,6 @@ let installMain() =
     //| true -> Console.ok <| "Sideloader ready to use."
     //| false -> Console.error <| "Sideloader failed to start."
 
-    let installSwate = SideloaderCommands.installSwate()
+    let installSwate = SideloaderCommands.installSwateTest()
 
     Console.ok "Swate registry done."
