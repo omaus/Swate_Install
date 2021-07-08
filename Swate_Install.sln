@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		publishTest.cmd = publishTest.cmd
 		README.md = README.md
 		uninstall.cmd = uninstall.cmd
+		uninstall.sh = uninstall.sh
 	EndProjectSection
 EndProject
 Global
