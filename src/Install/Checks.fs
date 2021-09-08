@@ -13,7 +13,7 @@ let getParseResult res = {
 }
 
 [<Literal>]
-let SwateUrl = @"https://swate.denbi.uni-tuebingen.de/"
+let SwateUrl = @"https://ffa36119-f79c-4836-914d-b3f24522830c.fr.bw-cloud-instance.org/"
 /// Can be used to check Client - Server connection
 
 [<Literal>]

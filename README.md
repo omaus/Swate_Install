@@ -7,9 +7,9 @@ If you have any problems using this, please let us know [here](https://github.co
 ## How to use it
 
 1. Download the newest version of the Swate Installer for your respective OS:
-   - [Windows (64-bit)](https://github.com/omaus/Swate_Install/raw/master/Installer/Win/Install.exe)
-   - [Linux (64-bit)](https://github.com/omaus/Swate_Install/raw/master/Installer/Linux/Install)
-   - [MacOS (64-bit)](https://github.com/omaus/Swate_Install/raw/master/Installer/OSx/Install)
+   - [Windows (64-bit)](https://github.com/omaus/Swate_Install/raw/demoServer/Installer/Win/Install.exe)
+   - [Linux (64-bit)](https://github.com/omaus/Swate_Install/raw/demoServer/Installer/Linux/Install)
+   - [MacOS (64-bit)](https://github.com/omaus/Swate_Install/raw/demoServer/Installer/OSx/Install)
 2. Run the **install** application (in case of Windows: **install.exe**). This will download necessary files and register Swate for your Microsoft Excel application.
 3. Open/Restart Excel ➔ Insert ➔ Click on the small arrow on the right side of My Add-ins ➔ Swate (Under Developer Add-ins).  
 ![install](/.assets/SwateInstall.png)
@@ -21,8 +21,8 @@ If you have any problems using this, please let us know [here](https://github.co
 If you want to cleanly remove Swate from MS Excel, use the provided Uninstaller for your respective OS.  
 Swate Installer already downloads the fitting file for you into the folder where the executable _Install_ file is. If you missed or accidentally deleted the file you can download it here:
 1. Right click on the links and choose "Save link as..."/"Save target as..."
-    - [Windows](https://raw.githubusercontent.com/omaus/Swate_Install/master/uninstall.cmd)
-    - [Linux/MacOS](https://raw.githubusercontent.com/omaus/Swate_Install/master/uninstall.sh)
+    - [Windows](https://raw.githubusercontent.com/omaus/Swate_Install/demoServer/uninstall.cmd)
+    - [Linux/MacOS](https://raw.githubusercontent.com/omaus/Swate_Install/demoServer/uninstall.sh)
 2. Place it into the folder where you installed Swate.
 3. Run it.
 
