@@ -2,6 +2,13 @@
 
 open System.IO
 
+type OS =
+| Windows
+| Linux
+| MacOS
+| FreeBSD
+| NotSupported
+
 module Paths = 
 
     let pRoot() = Directory.GetCurrentDirectory()
@@ -13,14 +20,16 @@ module Paths =
     let getUninstallerPath os = 
         let filename = 
             match os with
-            | "Windows"         -> "Uninstall.cmd"
-            | "Linux" | "MacOS" -> "Uninstall.sh"
-            | _                 -> printfn "No suitable Uninstaller existing. OS (%s) not supported" os; ""
+            | Windows       -> "Uninstall.cmd"
+            | Linux | MacOS -> "Uninstall.sh"
+            | _             -> printfn "No suitable Uninstaller existing. OS (%A) not supported" os; ""
         Path.Combine(pRoot(), filename)
 
     let createConfigFolder () = Directory.CreateDirectory (configPath())
 
 module Download =
+
+    open System.Runtime.InteropServices
     
     [<Literal>]
     let SideloaderUrl = @"https://github.com/davecra/WebAddinSideloader/raw/master/Set-WebAddin%20(v1.0.0.1).zip"
@@ -29,18 +38,18 @@ module Download =
     let ManifestUrl = @"https://raw.githubusercontent.com/nfdi4plants/Swate/developer/.assets/assets/manifest.xml"
 
     let getOS () = 
-        match System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform with
-        | _ when System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows)  -> "Windows"
-        | _ when System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Linux)    -> "Linux"
-        | _ when System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.OSX)      -> "MacOS"
-        | _ when System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.FreeBSD)  -> "FreeBSD (whatever this is)"
-        | _                                                                                                                         -> "no supported OS"
+        match RuntimeInformation.IsOSPlatform with
+        | _ when RuntimeInformation.IsOSPlatform(OSPlatform.Windows)    -> Windows
+        | _ when RuntimeInformation.IsOSPlatform(OSPlatform.Linux)      -> Linux
+        | _ when RuntimeInformation.IsOSPlatform(OSPlatform.OSX)        -> MacOS
+        | _ when RuntimeInformation.IsOSPlatform(OSPlatform.FreeBSD)    -> FreeBSD // (whatever this is)
+        | _                                                             -> NotSupported
 
     let getUninstallerUrl os =
         match os with
-        | "Windows"         -> @"https://raw.githubusercontent.com/omaus/Swate_Install/master/uninstall.cmd"
-        | "Linux" | "MacOS" -> @"https://raw.githubusercontent.com/omaus/Swate_Install/master/uninstall.sh"
-        | _                 -> printfn "Cannot download Uninstaller. OS (%s) not supported" os; ""
+        | Windows       -> @"https://raw.githubusercontent.com/omaus/Swate_Install/master/uninstall.cmd"
+        | Linux | MacOS -> @"https://raw.githubusercontent.com/omaus/Swate_Install/master/uninstall.sh"
+        | _             -> printfn "Cannot download Uninstaller. OS (%A) not supported" os; ""
 
     let webCl = new System.Net.WebClient()
 
@@ -118,19 +127,19 @@ module SideloaderCommands =
     //    Seq.contains errorMsg c |> not
 
     let installSwateTest() =
-        System.Diagnostics.Process.Start(Paths.sideloaderPath(), ["-test"; "-manifestPath"; Paths.manifestPath()])
+        Process.Start(Paths.sideloaderPath(), ["-test"; "-manifestPath"; Paths.manifestPath()])
 
     let installSwateFull() =
         let installPath() = Path.Combine(Paths.configPath(), "sideloaderData")
-        System.IO.Directory.CreateDirectory(installPath()) |> ignore
-        System.Diagnostics.Process.Start(Paths.sideloaderPath(), ["-install"; "-manifestPath"; Paths.manifestPath(); "-installPath"; installPath()])
+        Directory.CreateDirectory(installPath()) |> ignore
+        Process.Start(Paths.sideloaderPath(), ["-install"; "-manifestPath"; Paths.manifestPath(); "-installPath"; installPath()])
 
     let removeSwateTest() =
-        System.Diagnostics.Process.Start(Paths.sideloaderPath(), ["-cleanup"; "-manifestPath"; Paths.manifestPath()])
+        Process.Start(Paths.sideloaderPath(), ["-cleanup"; "-manifestPath"; Paths.manifestPath()])
 
     let removeSwateFull() =
         // manifestPaths könnte failen, weil nicht das Gleiche weil manifestPath ≠ installedManifestFullname (gilt auch für die Uninstaller!)
-        System.Diagnostics.Process.Start(Paths.sideloaderPath(), ["-uninstall"; "-installedManifestFullname"; Paths.manifestPath()])
+        Process.Start(Paths.sideloaderPath(), ["-uninstall"; "-installedManifestFullname"; Paths.manifestPath()])
 
 open Console
 
