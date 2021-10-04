@@ -5,9 +5,9 @@
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>Install_macOS_</RootNamespace>
     <WarnOn>3390;$(WarnOn)</WarnOn>
-    <!--<PublishSingleFile>true</PublishSingleFile>
+    <PublishSingleFile>true</PublishSingleFile>
     <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
-    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>-->
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
     <PackAsTool>true</PackAsTool>
     <PublishTrimmed>true</PublishTrimmed>
 
