@@ -2,65 +2,36 @@
 
 open System.IO
 
-type OS =
-| Windows
-| Linux
-| MacOS
-| FreeBSD
-| NotSupported
-
 module Paths = 
 
-    let pRoot() = Directory.GetCurrentDirectory()
-    let configPath() = Path.Combine(pRoot (), "config")
-    let sideloaderZipPath() = Path.Combine(configPath (), "Set-WebAddin.zip")
-    let sideloaderPath() = Path.Combine(configPath (), "Set-WebAddin.exe")
-    let manifestPath() = Path.Combine(configPath(), "manifest.xml")
-    
-    let getUninstallerPath os = 
-        let filename = 
-            match os with
-            | Windows       -> "Uninstall.cmd"
-            | Linux | MacOS -> "Uninstall.sh"
-            | _             -> printfn "No suitable Uninstaller existing. OS (%A) not supported" os; ""
-        Path.Combine(pRoot(), filename)
-
-    let createConfigFolder () = Directory.CreateDirectory (configPath())
+    let pRoot () = Directory.GetCurrentDirectory()
+    let configPath () = Path.Combine(pRoot (), "config")
+    let sideloaderZipPath () = Path.Combine(configPath (), "Set-WebAddin.zip")
+    let sideloaderPath () = Path.Combine(configPath (), "Set-WebAddin.exe")
+    let manifestPath () = Path.Combine(configPath (), "manifest.xml")
+    let uninstallerPath () = Path.Combine(pRoot (), "Uninstall.cmd")
+    let createConfigFolder () = Directory.CreateDirectory (configPath ())
 
 module Download =
 
-    open System.Runtime.InteropServices
-    
+    open Paths
+
     [<Literal>]
     let SideloaderUrl = @"https://github.com/davecra/WebAddinSideloader/raw/master/Set-WebAddin%20(v1.0.0.1).zip"
 
     [<Literal>]
     let ManifestUrl = @"https://raw.githubusercontent.com/nfdi4plants/Swate/developer/.assets/assets/manifest.xml"
 
-    let getOS () = 
-        match RuntimeInformation.IsOSPlatform with
-        | _ when RuntimeInformation.IsOSPlatform(OSPlatform.Windows)    -> Windows
-        | _ when RuntimeInformation.IsOSPlatform(OSPlatform.Linux)      -> Linux
-        | _ when RuntimeInformation.IsOSPlatform(OSPlatform.OSX)        -> MacOS
-        | _ when RuntimeInformation.IsOSPlatform(OSPlatform.FreeBSD)    -> FreeBSD // (whatever this is)
-        | _                                                             -> NotSupported
-
-    let getUninstallerUrl os =
-        match os with
-        | Windows       -> @"https://raw.githubusercontent.com/omaus/Swate_Install/master/uninstall.cmd"
-        | Linux | MacOS -> @"https://raw.githubusercontent.com/omaus/Swate_Install/master/uninstall.sh"
-        | _             -> printfn "Cannot download Uninstaller. OS (%A) not supported" os; ""
+    [<Literal>]
+    let UninstallerUrl = @"https://raw.githubusercontent.com/omaus/Swate_Install/master/uninstall.cmd"
 
     let webCl = new System.Net.WebClient()
 
-    open Paths
+    let downloadSideLoader() = webCl.DownloadFile(SideloaderUrl, sideloaderZipPath ())
 
-    let downloadSideLoader() = webCl.DownloadFile(SideloaderUrl,sideloaderZipPath())
+    let downloadManifestXml() = webCl.DownloadFile(ManifestUrl, manifestPath ())
 
-    let downloadManifestXml() = webCl.DownloadFile(ManifestUrl,manifestPath())
-
-    // testen: Fehlendes Literal attribute könnte problematisch werden
-    let downloadUninstaller() = webCl.DownloadFile(getUninstallerUrl (getOS()),getUninstallerPath (getOS()))
+    let downloadUninstaller() = webCl.DownloadFile(UninstallerUrl, uninstallerPath ())
 
 
 module Unzip =
@@ -70,7 +41,7 @@ module Unzip =
     open System.Reflection
     open System
 
-    let unzipFile (zipArchivePath: string) (targetDir:string) =
+    let unzipFile (zipArchivePath : string) (targetDir : string) =
         ZipFile.ExtractToDirectory(zipArchivePath, targetDir)
 
 /// works in .fsx scripting (maybe due to FSI not closing?) but not compiled -> TO DO!
@@ -127,45 +98,45 @@ module SideloaderCommands =
     //    Seq.contains errorMsg c |> not
 
     let installSwateTest() =
-        Process.Start(Paths.sideloaderPath(), ["-test"; "-manifestPath"; Paths.manifestPath()])
+        Process.Start(Paths.sideloaderPath (), ["-test"; "-manifestPath"; Paths.manifestPath ()])
 
     let installSwateFull() =
-        let installPath() = Path.Combine(Paths.configPath(), "sideloaderData")
-        Directory.CreateDirectory(installPath()) |> ignore
-        Process.Start(Paths.sideloaderPath(), ["-install"; "-manifestPath"; Paths.manifestPath(); "-installPath"; installPath()])
+        let installPath() = Path.Combine(Paths.configPath (), "sideloaderData")
+        Directory.CreateDirectory(installPath ()) |> ignore
+        Process.Start(Paths.sideloaderPath (), ["-install"; "-manifestPath"; Paths.manifestPath (); "-installPath"; installPath ()])
 
     let removeSwateTest() =
-        Process.Start(Paths.sideloaderPath(), ["-cleanup"; "-manifestPath"; Paths.manifestPath()])
+        Process.Start(Paths.sideloaderPath (), ["-cleanup"; "-manifestPath"; Paths.manifestPath ()])
 
     let removeSwateFull() =
         // manifestPaths könnte failen, weil nicht das Gleiche weil manifestPath ≠ installedManifestFullname (gilt auch für die Uninstaller!)
-        Process.Start(Paths.sideloaderPath(), ["-uninstall"; "-installedManifestFullname"; Paths.manifestPath()])
+        Process.Start(Paths.sideloaderPath (), ["-uninstall"; "-installedManifestFullname"; Paths.manifestPath ()])
 
 open Console
 
 let downloadMain() =
 
     // create config folder if not existing
-    let createConfigFolder = Paths.createConfigFolder()
+    let createConfigFolder = Paths.createConfigFolder ()
 
     printfn "Clean configs."
     let cleanFolder = 
-        let files = System.IO.Directory.GetFiles (Paths.configPath())
+        let files = System.IO.Directory.GetFiles (Paths.configPath ())
         files |> Array.iter System.IO.File.Delete
 
     Console.info "Download and unzip required utilities."
 
-    let downloadSideLoader = Download.downloadSideLoader()
+    let downloadSideLoader = Download.downloadSideLoader ()
     Console.info "Download Sideloader done!"
     /// Unzip downloaded sideloader zip file
-    let unzip = Unzip.unzipFile (Paths.sideloaderZipPath()) (Paths.configPath())
+    let unzip = Unzip.unzipFile (Paths.sideloaderZipPath ()) (Paths.configPath ())
     /// Delete downloaded sideloader zip file
-    let cleanUp = System.IO.File.Delete (Paths.sideloaderZipPath())
+    let cleanUp = System.IO.File.Delete (Paths.sideloaderZipPath ())
 
-    let downloadManifestXml = Download.downloadManifestXml()
+    let downloadManifestXml = Download.downloadManifestXml ()
     Console.info "Download Manifest.xml done!"
 
-    let downloaderUninstaller = Download.downloadUninstaller()
+    let downloaderUninstaller = Download.downloadUninstaller ()
     Console.info "Download Uninstaller done!"
 
     Console.ok "Finished downloading utilities."
@@ -182,6 +153,6 @@ let installMain() =
 
     let installSwate = 
         //SideloaderCommands.installSwateTest()
-        SideloaderCommands.installSwateFull()
+        SideloaderCommands.installSwateFull ()
 
     Console.ok "Swate registry done."
