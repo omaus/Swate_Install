@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>Install_macOS_</RootNamespace>
+    <WarnOn>3390;$(WarnOn)</WarnOn>
+    <!--<PublishSingleFile>true</PublishSingleFile>
+    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>-->
+    <PackAsTool>true</PackAsTool>
+    <PublishTrimmed>true</PublishTrimmed>
+
+    <UseAppHost>true</UseAppHost>
+    
+    <CFBundleName>InstallSwate_macOS</CFBundleName>
+    <!-- Also defines .app file name -->
+    <CFBundleDisplayName>InstallSwate_macOS</CFBundleDisplayName>
+    <CFBundleIdentifier>com.example</CFBundleIdentifier>
+    <CFBundleVersion>0.0.1</CFBundleVersion>
+    <CFBundlePackageType>APPL</CFBundlePackageType>
+    <CFBundleExecutable>InstallSwate_macOS</CFBundleExecutable>
+    <!-- Will be copied from output directory -->
+    <NSPrincipalClass>NSApplication</NSPrincipalClass>
+    <NSHighResolutionCapable>true</NSHighResolutionCapable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Download.fs" />
+    <Compile Include="Console.fs" />
+    <Compile Include="Checks.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FSharp.Data" Version="4.2.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Dotnet.Bundle" Version="*" />
+  </ItemGroup>
+
+</Project>
