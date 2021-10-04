@@ -9,7 +9,7 @@ If you have any problems using this, please let us know [here](https://github.co
 1. Download the newest version of the Swate Installer for your respective OS:
    - [Windows (64-bit)](https://github.com/omaus/Swate_Install/raw/master/Installer/Win/Install(Windows).exe)
    - [MacOS (64-bit)](https://github.com/omaus/Swate_Install/raw/master/Installer/OSx/Install(macOS))
-2. Run the **install** application (in case of Windows: **install.exe**). This will download necessary files and register Swate for your Microsoft Excel application.
+2. Run the **install** application (e.g. in case of Windows: **Install(Windows).exe**). This will download necessary files and register Swate for your Microsoft Excel application.
 3. Open/Restart Excel ➔ Insert ➔ Click on the small arrow on the right side of My Add-ins ➔ Swate (Under Developer Add-ins).  
 ![install](/.assets/SwateInstall.png)
 4. You will be able to access Swate like this with all Excel instances.
