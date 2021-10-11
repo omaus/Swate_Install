@@ -4,7 +4,8 @@ open System
 open System.IO
 
 [<Literal>]
-let ManifestUrl = @"https://raw.githubusercontent.com/nfdi4plants/Swate/developer/.assets/assets/manifest.xml"
+//let ManifestUrl = @"https://raw.githubusercontent.com/nfdi4plants/Swate/developer/.assets/assets/manifest.xml" // atm. outdated, uncomment when next version is live
+let ManifestUrl = @"https://raw.githubusercontent.com/nfdi4plants/Swate/47965986e914f30b3b438bc44ede81308dc16d39/.assets/assets/manifest.xml"
 
 let webCl = new System.Net.WebClient()
 

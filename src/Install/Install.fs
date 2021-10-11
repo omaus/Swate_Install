@@ -20,7 +20,8 @@ module Download =
     let SideloaderUrl = @"https://github.com/davecra/WebAddinSideloader/raw/master/Set-WebAddin%20(v1.0.0.1).zip"
 
     [<Literal>]
-    let ManifestUrl = @"https://raw.githubusercontent.com/nfdi4plants/Swate/developer/.assets/assets/manifest.xml"
+    //let ManifestUrl = @"https://raw.githubusercontent.com/nfdi4plants/Swate/developer/.assets/assets/manifest.xml" // atm. outdated, uncomment when next version is live
+    let ManifestUrl = @"https://raw.githubusercontent.com/nfdi4plants/Swate/47965986e914f30b3b438bc44ede81308dc16d39/.assets/assets/manifest.xml"
 
     [<Literal>]
     let UninstallerUrl = @"https://raw.githubusercontent.com/omaus/Swate_Install/master/uninstall.cmd"
