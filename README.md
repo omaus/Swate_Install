@@ -1,6 +1,8 @@
 # Swate Installer
 
-As long as [Swate](https://github.com/nfdi4plants/Swate) will not be available from the Microsoft Store, this installer can be used. It aims to provide an easier solution then previous alternatives.
+As long as [Swate](https://github.com/nfdi4plants/Swate) will not be available from the Microsoft Store, this installer can be used. It aims to provide an easier solution then previous alternatives.  
+___N O T E___ : Swate runs **only** on MS Excel 365, and MS Excel Online. We test on and develop for explicitly these versions.  
+(It is possible though that some older versions like MS Excel 2019 work.)
 
 If you have any problems using this, please let us know [here](https://github.com/omaus/Swate_Install/issues/new).
 
