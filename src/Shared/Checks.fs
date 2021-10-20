@@ -1,5 +1,9 @@
 ﻿module Checks
 
+open FSharp.Data
+open Newtonsoft.Json
+open Url
+
 type ParseResult<'a> = {
     Result  : 'a
     Success : bool
@@ -10,20 +14,9 @@ let getParseResult res = {
     Success = res <> ""
 }
 
-[<Literal>]
-let SwateUrl = @"https://ffa36119-f79c-4836-914d-b3f24522830c.fr.bw-cloud-instance.org/"
-/// Can be used to check Client - Server connection
-
-[<Literal>]
-let GetAppVersionAPI = SwateUrl + @"api/IServiceAPIv1/getAppVersion"
-/// Can be used to check Server - Database connection
-
-[<Literal>]
-let GetAllOntologiesAPI = SwateUrl + @"api/IAnnotatorAPIv1/getAllOntologies"
-
 let getAppVersion () = 
     getParseResult (
-        try FSharp.Data.Http.RequestString(GetAppVersionAPI)
+        try Http.RequestString(GetAppVersionAPI)
         with err -> Console.error <| sprintf "ERROR: Did not get App version due to:\n%s" err.Message; ""
     )
 
@@ -43,11 +36,11 @@ type Ontology = {
 
 let getAllOntologies () =
     getParseResult (
-        try FSharp.Data.Http.RequestString(GetAllOntologiesAPI) 
+        try Http.RequestString(GetAllOntologiesAPI) 
         with err -> Console.error <| sprintf "ERROR: Was not able to parse ontologies due to:\n%s" err.Message; ""
     )
     
-let getOntoList jsonedFullstring = Newtonsoft.Json.JsonConvert.DeserializeObject<Ontology list> jsonedFullstring
+let getOntoList jsonedFullstring = JsonConvert.DeserializeObject<Ontology list> jsonedFullstring
 
 let checkOnto onto =
     let checkDate () =

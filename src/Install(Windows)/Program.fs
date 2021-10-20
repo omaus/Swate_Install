@@ -23,7 +23,7 @@ let main argv =
 
     let appVer = Checks.getAppVersion ()
     checkParseResult appVer
-    Checks.checkSemVer appVer.Result
+    checkSemVer appVer.Result
 
     let allOntos = Checks.getAllOntologies ()
     checkParseResult allOntos

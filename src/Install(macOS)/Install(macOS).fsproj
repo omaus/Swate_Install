@@ -27,8 +27,6 @@
 
   <ItemGroup>
     <Compile Include="Download.fs" />
-    <Compile Include="Console.fs" />
-    <Compile Include="Checks.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
@@ -36,6 +34,10 @@
     <PackageReference Include="FSharp.Data" Version="4.2.3" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Dotnet.Bundle" Version="*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Shared\Shared.fsproj" />
   </ItemGroup>
 
 </Project>
