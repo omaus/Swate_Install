@@ -5,12 +5,12 @@ open System.IO
 
 [<Literal>]
 let SwateUrl = @"https://swate.denbi.uni-tuebingen.de/"
-/// Can be used to check Client - Server connection
 
+/// Can be used to check Client - Server connection
 [<Literal>]
 let GetAppVersionAPI = SwateUrl + @"api/IServiceAPIv1/getAppVersion"
-/// Can be used to check Server - Database connection
 
+/// Can be used to check Server - Database connection
 [<Literal>]
 let GetAllOntologiesAPI = SwateUrl + @"api/IAnnotatorAPIv1/getAllOntologies"
 
