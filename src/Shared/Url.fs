@@ -12,7 +12,7 @@ let GetAppVersionAPI = SwateUrl + @"api/IServiceAPIv1/getAppVersion"
 
 /// Can be used to check Server - Database connection
 [<Literal>]
-let GetAllOntologiesAPI = SwateUrl + @"api/IAnnotatorAPIv1/getAllOntologies"
+let GetAllOntologiesAPI = SwateUrl + @"api/IOntologyAPIv1/getAllOntologies"
 
 [<Literal>]
 let ManifestUrl = @"https://raw.githubusercontent.com/nfdi4plants/Swate/developer/.assets/assets/manifest.xml"
