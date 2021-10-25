@@ -20,6 +20,3 @@ let ManifestUrl = @"https://raw.githubusercontent.com/nfdi4plants/Swate/47965986
 
 [<Literal>]
 let SideloaderUrl = @"https://github.com/davecra/WebAddinSideloader/raw/master/Set-WebAddin%20(v1.0.0.1).zip"
-
-[<Literal>]
-let UninstallerUrl = @"https://raw.githubusercontent.com/omaus/Swate_Install/master/uninstall.cmd"

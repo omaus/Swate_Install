@@ -3,6 +3,9 @@
 open System.IO
 open Url
 
+[<Literal>]
+let UninstallerUrl = @"https://raw.githubusercontent.com/omaus/Swate_Install/master/uninstall.cmd"
+
 module Paths = 
 
     let pRoot () = Directory.GetCurrentDirectory()
