@@ -1,5 +1,6 @@
 ﻿module Install
 
+open System
 open System.IO
 open Url
 
@@ -8,13 +9,15 @@ let UninstallerUrl = @"https://raw.githubusercontent.com/omaus/Swate_Install/mas
 
 module Paths = 
 
-    let pRoot () = Directory.GetCurrentDirectory()
-    let configPath () = Path.Combine(pRoot (), "config")
-    let sideloaderZipPath () = Path.Combine(configPath (), "Set-WebAddin.zip")
-    let sideloaderPath () = Path.Combine(configPath (), "Set-WebAddin.exe")
-    let manifestPath () = Path.Combine(configPath (), "manifest.xml")
-    let uninstallerPath () = Path.Combine(pRoot (), "Uninstall.cmd")
-    let createConfigFolder () = Directory.CreateDirectory (configPath ())
+    let getXdgHomeConfig () =
+        let appDataRoaming = Environment.SpecialFolder.ApplicationData
+        Environment.GetFolderPath(appDataRoaming, Environment.SpecialFolderOption.DoNotVerify)
+    let getConfigPath () = Path.Combine(getXdgHomeConfig (), "DataPANT", "Swate")
+    let getSideloaderZipPath () = Path.Combine(getConfigPath (), "Set-WebAddin.zip")
+    let getSideloaderPath () = Path.Combine(getConfigPath (), "Set-WebAddin.exe")
+    let getManifestPath () = Path.Combine(getConfigPath (), "manifest.xml")
+    let getUninstallerPath () = Path.Combine(getConfigPath (), "uninstall.cmd")
+    let createConfigFolder () = Directory.CreateDirectory (getConfigPath ())
 
 module Download =
 
@@ -22,11 +25,11 @@ module Download =
 
     let webCl = new System.Net.WebClient()
 
-    let downloadSideLoader() = webCl.DownloadFile(SideloaderUrl, sideloaderZipPath ())
+    let downloadSideLoader() = webCl.DownloadFile(SideloaderUrl, getSideloaderZipPath ())
 
-    let downloadManifestXml() = webCl.DownloadFile(ManifestUrl, manifestPath ())
+    let downloadManifestXml() = webCl.DownloadFile(ManifestUrl, getManifestPath ())
 
-    let downloadUninstaller() = webCl.DownloadFile(UninstallerUrl, uninstallerPath ())
+    let downloadUninstaller() = webCl.DownloadFile(UninstallerUrl, getUninstallerPath ())
 
 
 module Unzip =
@@ -93,19 +96,19 @@ module SideloaderCommands =
     //    Seq.contains errorMsg c |> not
 
     let installSwateTest() =
-        Process.Start(Paths.sideloaderPath (), ["-test"; "-manifestPath"; Paths.manifestPath ()])
+        Process.Start(Paths.getSideloaderPath (), ["-test"; "-manifestPath"; Paths.getManifestPath ()])
 
     let installSwateFull() =
-        let installPath() = Path.Combine(Paths.configPath (), "sideloaderData")
-        Directory.CreateDirectory(installPath ()) |> ignore
-        Process.Start(Paths.sideloaderPath (), ["-install"; "-manifestPath"; Paths.manifestPath (); "-installPath"; installPath ()])
+        let getInstallPath () = Path.Combine(Paths.getConfigPath (), "sideloaderData")
+        Directory.CreateDirectory(getInstallPath ()) |> ignore
+        Process.Start(Paths.getSideloaderPath (), ["-install"; "-manifestPath"; Paths.getManifestPath (); "-installPath"; getInstallPath ()])
 
     let removeSwateTest() =
-        Process.Start(Paths.sideloaderPath (), ["-cleanup"; "-manifestPath"; Paths.manifestPath ()])
+        Process.Start(Paths.getSideloaderPath (), ["-cleanup"; "-manifestPath"; Paths.getManifestPath ()])
 
     let removeSwateFull() =
         // manifestPaths könnte failen, weil nicht das Gleiche weil manifestPath ≠ installedManifestFullname (gilt auch für die Uninstaller!)
-        Process.Start(Paths.sideloaderPath (), ["-uninstall"; "-installedManifestFullname"; Paths.manifestPath ()])
+        Process.Start(Paths.getSideloaderPath (), ["-uninstall"; "-installedManifestFullname"; Paths.getManifestPath ()])
 
 open Console
 
@@ -116,7 +119,7 @@ let downloadMain() =
 
     printfn "Clean configs."
     let cleanFolder = 
-        let files = System.IO.Directory.GetFiles (Paths.configPath ())
+        let files = System.IO.Directory.GetFiles (Paths.getConfigPath ())
         files |> Array.iter System.IO.File.Delete
 
     Console.info "Download and unzip required utilities."
@@ -124,9 +127,9 @@ let downloadMain() =
     let downloadSideLoader = Download.downloadSideLoader ()
     Console.info "Download Sideloader done!"
     /// Unzip downloaded sideloader zip file
-    let unzip = Unzip.unzipFile (Paths.sideloaderZipPath ()) (Paths.configPath ())
+    let unzip = Unzip.unzipFile (Paths.getSideloaderZipPath ()) (Paths.getConfigPath ())
     /// Delete downloaded sideloader zip file
-    let cleanUp = System.IO.File.Delete (Paths.sideloaderZipPath ())
+    let cleanUp = System.IO.File.Delete (Paths.getSideloaderZipPath ())
 
     let downloadManifestXml = Download.downloadManifestXml ()
     Console.info "Download Manifest.xml done!"
