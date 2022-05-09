@@ -1,3 +1,5 @@
+***NOTE:*** This repository is deprecated as of May 9, 2022. Swate has its own installer for Windows and MacOS as simple CMD/Shell scripts now, thus this tool won't be updated anymore.
+
 # Swate Installer
 
 As long as [Swate](https://github.com/nfdi4plants/Swate) will not be available from the Microsoft Store, this installer can be used. It aims to provide an easier solution then previous alternatives.  
